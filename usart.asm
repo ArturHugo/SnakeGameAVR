@@ -13,6 +13,9 @@ USART_Init:
   sts UBRR0H, temp
   ldi temp, BAUDRATE_L
   sts UBRR0L, temp
+  ; U20A = 0
+  ldi temp, 0
+  sts UCSR0A, temp
   ; Enable receiver and transmitter
   ldi temp, (1<<RXEN0)|(1<<TXEN0)|(1<<RXCIE0)
   sts UCSR0B, temp

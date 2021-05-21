@@ -13,8 +13,15 @@
 ;
 .cseg
 .org 0x0000
-  ldi rng_reg, 0x15
+  ; ldi temp, (1<<CLKPCE)
+  ; sts CLKPR, temp
+  ; ldi temp, (1<<CLKPS2)
+  ; sts CLKPR, temp
+  ldi rng_reg, 0x16
   jmp Setup
+
+.org 0x0016
+  jmp TIM1_COMPA
 
 .org 0x0024
   jmp USART_RXC
@@ -57,9 +64,11 @@
 Setup:
   rcall LEDMatrix_ClearDisplayData
   rcall Snake_Init
-  rcall Snake_DrawFrame
   ; rcall Snake_DrawFrame
   ; rcall Snake_DrawFrame
+  ; rcall Snake_DrawFrame
+
+  rcall Timer_Init
 
   rcall USART_Init
   rcall SPI_MasterInit
@@ -92,19 +101,15 @@ Setup:
   ; rcall LEDMatrix_ClearDisplayData
 
 Main:
-  rcall Delay 
+  rcall Timer_Delay 
 
 Draw_RandomPointInDisplay:
-
-
-
 
   rcall Snake_DrawFrame
 
   rcall LEDMatrix_WriteDisplay
 
-
-  rcall Delay 
+  rcall Timer_Delay 
 
 end:
   rjmp Main

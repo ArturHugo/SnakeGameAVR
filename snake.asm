@@ -123,6 +123,13 @@ Snake_DrawFrame_moveHead:
   ldi temp, 0
   sts Snake_ERASETAILFLAG, temp
 
+  ; Increase speed
+  lds  temp2, OCR1AH
+  lds  temp,  OCR1AL 
+  subi temp,  50
+  sts  OCR1AH, temp2
+  sts  OCR1AL, temp
+
 Snake_DrawFrame_eraseTail:
   rcall Snake_EraseTail
   
@@ -135,19 +142,19 @@ Snake_DrawFrame_eraseTail:
 Snake_DrawFrame_gameOver:
   ; TODO coisas no game over
   rcall LEDMatrix_Clear
-  rcall Delay
+  rcall Timer_Delay
   rcall LEDMatrix_WriteDisplay
-  rcall Delay
+  rcall Timer_Delay
   rcall LEDMatrix_Clear
-  rcall Delay
+  rcall Timer_Delay
   rcall LEDMatrix_WriteDisplay
-  rcall Delay
+  rcall Timer_Delay
   rcall LEDMatrix_Clear
-  rcall Delay
+  rcall Timer_Delay
   rcall LEDMatrix_WriteDisplay
-  rcall Delay
+  rcall Timer_Delay
 
-  ; rcall Snake_HandleGameOver
+  rcall Snake_HandleGameOver
 
 Snake_DrawFrame_end:
   ret
@@ -543,3 +550,6 @@ Snake_CheckGameOver_end:
   pop YL
   pop YH
   ret
+
+Snake_HandleGameOver:
+  jmp 0x00
