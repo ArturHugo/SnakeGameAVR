@@ -124,11 +124,11 @@ Snake_DrawFrame_moveHead:
   sts Snake_ERASETAILFLAG, temp
 
   ; Increase speed
-  lds  temp2, OCR1AH
-  lds  temp,  OCR1AL 
-  subi temp,  50
-  sts  OCR1AH, temp2
-  sts  OCR1AL, temp
+  lds temp2, OCR1AH
+  lds temp,  OCR1AL 
+  dec temp2
+  sts OCR1AH, temp2
+  sts OCR1AL, temp
 
 Snake_DrawFrame_eraseTail:
   rcall Snake_EraseTail

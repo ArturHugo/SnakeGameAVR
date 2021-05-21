@@ -26,9 +26,9 @@ Timer_Init:
   sts TCCR1C, temp
 
   ; Sets initial value of OCR1A to 255
-  ldi temp2, 0x00
-  ldi temp,  0xFF
-  sts OCR1AH, temp
+  ldi temp2, 16
+  ldi temp,  0
+  sts OCR1AH, temp2
   sts OCR1AL, temp
 
   ; Resets timer
@@ -46,8 +46,8 @@ Timer_Init:
 
 
 Timer_Delay:
-  ; Starts timer with clk = io clock / 64 (~256kHz)
-  ldi temp, (1<<WGM12)|(1<<CS11)|(1<<CS10)
+  ; Starts timer with clk = io clock / 256 (~256kHz)
+  ldi temp, (1<<WGM12)|(1<<CS12)|(1<<CS10)
   sts TCCR1B, temp
 
 Timer_Delay_loop:
